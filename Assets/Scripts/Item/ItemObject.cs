@@ -2,24 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Interactable
+public interface IInteractable
 {
     public string GetInteractPrompt();
     public void OnInterect();
 }
-public class ItemObject : MonoBehaviour , Interactable
+public class ItemObject : MonoBehaviour , IInteractable
 {
-    public ItemData itemData;
+    public ItemData data;
     
     public string GetInteractPrompt()
     {
-        string str = $"{itemData.displayName}\n {itemData.description}";
+        string str = $"{data.displayName}\n {data.description}";
         return str;
     }
 
     public void OnInterect()
     {
-        CharacterManager.Instance.Player.itemData = ScriptableObject.CreateInstance<ItemData>();
+        CharacterManager.Instance.Player.itemData = data;
         CharacterManager.Instance.Player.addItem?.Invoke();
         Destroy(gameObject);
         

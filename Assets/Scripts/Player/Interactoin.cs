@@ -10,12 +10,11 @@ public class Interactoin : MonoBehaviour
     public float checkRate = 0.05f;
     private float lastCheckTime;
     public float maxCheckDistance;
-    public LayerMask layweMask;
+    public LayerMask layerMask;
 
-    private GameObject curInteractGameObject;
-    public GameObject curInteractingObject;
-    private Interactable curInteractable;
-
+    public GameObject curInteractGameObject;
+    private IInteractable curInteractable;
+    
     public TextMeshProUGUI promptText;
     private Camera camera;
 
@@ -33,18 +32,18 @@ public class Interactoin : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, maxCheckDistance, layweMask))
+            if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
             {
-                if (hit.collider.gameObject != curInteractingObject)
+                if (hit.collider.gameObject != curInteractGameObject)
                 {
-                    curInteractingObject = hit.collider.gameObject;
-                    curInteractable = hit.collider.GetComponent<Interactable>();
+                    curInteractGameObject = hit.collider.gameObject;
+                    curInteractable = hit.collider.GetComponent<IInteractable>();
                     SetPromptText();                
                 }
             }
             else
             {
-                curInteractingObject = null;
+                curInteractGameObject = null;
                 curInteractable = null;
                 promptText.gameObject.SetActive(false);
             }
