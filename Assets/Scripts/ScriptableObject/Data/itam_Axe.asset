@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: itam_Axe
   m_EditorClassIdentifier: 
   displayName: "\uB3C4\uB07C"
-  description: "\uC18D\uB3C4\uAC00 \uBE68\uB77C\uC9C4\uB2E4"
+  description: "10\uCD08\uB3D9\uC548 \uC18D\uB3C4\uAC00 \uBE68\uB77C\uC9C4\uB2E4"
   type: 1
   icon: {fileID: 21300000, guid: 06e8d836c76eb494db7ab3784ffcb0eb, type: 3}
   dropPrefab: {fileID: 742282561030635909, guid: a33fc1e5afdcd1540aeddd538bb53c29, type: 3}
@@ -21,6 +21,6 @@ MonoBehaviour:
   maxStackAmount: 0
   consumables:
   - type: 0
-    value: 10
+    value: 5
   - type: 0
     value: 0

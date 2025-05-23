@@ -14,5 +14,17 @@ public class PlayerCondition : MonoBehaviour
     {
         stamina.Add(stamina.passiveValue * Time.deltaTime);
     }
-    
+
+    public bool UseStamina(float amount)
+    {
+        if (stamina.curValue - amount < 0)
+        {
+            return false;
+        }
+
+        stamina.Subtract(amount);
+        return true;
+    }
+
+
 }

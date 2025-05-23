@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
@@ -188,22 +189,37 @@ public class UIInventory : MonoBehaviour
     {
         if (selectedItem.type == ItemType.Consumable)
         {
+            float originalSpeed = controller.moveSpeed;
+            float originalJump = controller.jumpPower;
+            
             for (int i = 0; i < selectedItem.consumables.Length; i++)
             {
                 switch (selectedItem.consumables[i].type)
                 {
-                    case ConsumableType.Health:
-                        //condition.Heal(selectedItem.consumables[i].value);
+                    case ConsumableType.Speed:
+                        controller.moveSpeed += selectedItem.consumables[i].value;
                         break;
-                    case ConsumableType.Hunger:
-                        //condition.Eat(selectedItem.consumables[i].value);
+                    case ConsumableType.Jump:
+                        controller.jumpPower += selectedItem.consumables[i].value;
                         break;
                 }
             }
-
+            StartCoroutine(ResetStatsAfterDelay(10f, originalSpeed, originalJump));
+            
             RemoveSelctedItem();
         }
     }
+    
+    private IEnumerator ResetStatsAfterDelay(float delay, float originalSpeed, float originalJump)
+    {
+        yield return new WaitForSeconds(delay);
+
+        controller.moveSpeed = originalSpeed;
+        controller.jumpPower = originalJump;
+
+        Debug.Log("스탯이 원래대로 복원되었습니다.");
+    }
+    
     public void OnDropButton()
     {
         ThrowItem(selectedItem);
@@ -217,9 +233,9 @@ public class UIInventory : MonoBehaviour
         if (slots[selectedItemIndex].quantity <= 0)
         {
             selectedItem = null;
+            slots[selectedItemIndex].item = null;
             selectedItemIndex = -1;
             ClearSelectedItemWindow();
-            slots[selectedItemIndex].item = null;
         }
 
         UpdateUI();
